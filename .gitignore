@@ -1,0 +1,8 @@
+# IntelliJ IDEA:
+*.iml
+.idea/
+.gradle/
+build/
+
+#Logs
+logs/
