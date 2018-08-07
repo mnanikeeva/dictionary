@@ -3,7 +3,11 @@ package org.anikeeva.mn.test.dictionary.model;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by sbt-novozhilova-mn on 06.08.2018.
@@ -19,17 +23,17 @@ public class Dictionary {
         this.name = name;
     }
 
-    public Map<String, Word> getWords() {
-        return words;
+    public Set<Word> getWords() {
+        return new HashSet<>(words.values());
     }
 
-    public void setWords(Map<String, Word> words) {
-        this.words = words;
+    public void setWords(Set<Word> words) {
+        this.words = words != null ? toMap(words) : new HashMap<>();
     }
 
-    public Dictionary(String name, Map<String, Word> words) {
+    public Dictionary(String name, Set<Word> words) {
         this.name = name;
-        this.words = words;
+        this.words = words != null ? toMap(words) : new HashMap<>();
     }
 
     public String getName() {
@@ -56,14 +60,18 @@ public class Dictionary {
     }
 
     public Word getWord(String text) {
-        return getWords().get(text);
+        return words.get(text);
     }
 
     public void removeWord(String text) {
-        getWords().remove(text);
+        words.remove(text);
     }
 
     public void addWord(Word word) {
-        getWords().put(word.getText(), word);
+        words.put(word.getText(), word);
+    }
+
+    private Map<String, Word> toMap(Set<Word> words){
+        return words.stream().collect(Collectors.toMap(Word::getText, Function.identity()));
     }
 }
