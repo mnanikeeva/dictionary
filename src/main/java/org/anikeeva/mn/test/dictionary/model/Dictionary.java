@@ -1,5 +1,7 @@
 package org.anikeeva.mn.test.dictionary.model;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,5 +53,17 @@ public class Dictionary {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    public Word getWord(String text, Dictionary dictionary) {
+        return dictionary.getWords().get(text);
+    }
+
+    public void removeWord(String text, Dictionary dictionary) {
+        dictionary.getWords().remove(text);
+    }
+
+    public void addWord(Word word, Dictionary dictionary) {
+        dictionary.getWords().put(word.getText(), word);
     }
 }

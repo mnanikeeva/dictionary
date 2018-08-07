@@ -1,5 +1,7 @@
 package org.anikeeva.mn.test.dictionary.model;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +30,4 @@ public class DictionaryRepository {
         dictionaries.add(dictionary);
         return dictionary;
     }
-
 }

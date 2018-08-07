@@ -37,8 +37,8 @@ public class DictionaryController {
     public ResponseEntity<Word> get(@PathVariable String name, @PathVariable String text) {
         Dictionary dictionary = dictionaries.find(name);
         if (dictionary != null) {
-            if (dictionary.getWords().get(text) != null) {
-                return new ResponseEntity<>(dictionary.getWords().get(text), HttpStatus.OK);
+            if (dictionary.getWord(text, dictionary) != null) {
+                return new ResponseEntity<>(dictionary.getWord(text, dictionary), HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ public class DictionaryController {
     public ResponseEntity delete(@PathVariable String name, @PathVariable String text) {
         Dictionary dictionary = dictionaries.find(name);
         if (dictionary != null) {
-            dictionary.getWords().remove(text);
+            dictionary.removeWord(text, dictionary);
         }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -60,7 +60,6 @@ public class DictionaryController {
         dictionaries.deleteByName(name);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 
     @RequestMapping(value = "/{name}", method = POST)
     @ResponseBody
@@ -73,7 +72,7 @@ public class DictionaryController {
     public ResponseEntity put(@PathVariable String name, @RequestBody Word word) {
         Dictionary dictionary = dictionaries.find(name);
         if (dictionary != null) {
-            dictionary.getWords().put(word.getText(), word);
+            dictionary.addWord(word, dictionary);
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
