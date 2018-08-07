@@ -55,15 +55,15 @@ public class Dictionary {
         return name != null ? name.hashCode() : 0;
     }
 
-    public Word getWord(String text, Dictionary dictionary) {
-        return dictionary.getWords().get(text);
+    public Word getWord(String text) {
+        return getWords().get(text);
     }
 
-    public void removeWord(String text, Dictionary dictionary) {
-        dictionary.getWords().remove(text);
+    public void removeWord(String text) {
+        getWords().remove(text);
     }
 
-    public void addWord(Word word, Dictionary dictionary) {
-        dictionary.getWords().put(word.getText(), word);
+    public void addWord(Word word) {
+        getWords().put(word.getText(), word);
     }
 }
