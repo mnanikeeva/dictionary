@@ -50,9 +50,8 @@ public class DictionaryController {
         Dictionary dictionary = dictionaries.find(name);
         if (dictionary != null) {
             dictionary.getWords().remove(text);
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{name}", method = DELETE)

@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class DictionaryRepository {
 
-    List<Dictionary> list = new ArrayList<>();
+    List<Dictionary> dictionaries = new ArrayList<>();
 
     public Dictionary find(String name) {
-        for (Dictionary dict : list) {
+        for (Dictionary dict : dictionaries) {
             if (dict.getName().equals(name)) {
                 return dict;
             }
@@ -20,12 +20,12 @@ public class DictionaryRepository {
     }
 
     public void deleteByName(String name) {
-        list.remove(find(name));
+        dictionaries.remove(find(name));
     }
 
     public Dictionary create(String name) {
         Dictionary dictionary = new Dictionary(name);
-        list.add(dictionary);
+        dictionaries.add(dictionary);
         return dictionary;
     }
 
