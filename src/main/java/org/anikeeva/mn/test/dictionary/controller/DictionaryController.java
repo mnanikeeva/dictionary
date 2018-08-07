@@ -23,20 +23,21 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/dictionary")
 public class DictionaryController {
 
+    DictionaryRepository dictionaryRepository = new DictionaryRepository();
+
     @RequestMapping(value = "/{name}", method = GET)
     @ResponseBody
     public ResponseEntity<Dictionary> get(@PathVariable String name) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         Dictionary dictionary = dictionaryRepository.find(name);
         if (dictionary != null) {
             return new ResponseEntity<>(dictionary, HttpStatus.OK);
-        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/{name}/{text}", method = GET)
     @ResponseBody
     public ResponseEntity<Word> get(@PathVariable String name, @PathVariable String text) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         Dictionary dictionary = dictionaryRepository.find(name);
         if (dictionary != null) {
             if (dictionary.getWords().get(text) != null) {
@@ -49,21 +50,19 @@ public class DictionaryController {
     @RequestMapping(value = "/{name}/{text}", method = DELETE)
     @ResponseBody
     public ResponseEntity delete(@PathVariable String name, @PathVariable String text) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         Dictionary dictionary = dictionaryRepository.find(name);
         if (dictionary != null) {
             if (dictionary.getWords().containsKey(text)) {
                 dictionary.getWords().remove(text);
             }
             return new ResponseEntity(HttpStatus.OK);
-        } else return new ResponseEntity(HttpStatus.NOT_FOUND);
-
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/{name}", method = DELETE)
     @ResponseBody
     public ResponseEntity delete(@PathVariable String name) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         dictionaryRepository.deleteByName(name);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -72,19 +71,18 @@ public class DictionaryController {
     @RequestMapping(value = "/{name}", method = POST)
     @ResponseBody
     public Dictionary post(@PathVariable String name) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         return dictionaryRepository.create(name);
     }
 
     @RequestMapping(value = "/{name}", method = PUT)
     @ResponseBody
     public ResponseEntity put(@PathVariable String name, @RequestBody Word word) {
-        DictionaryRepository dictionaryRepository = new DictionaryRepository();
         Dictionary dictionary = dictionaryRepository.find(name);
         if (dictionary != null) {
             dictionary.getWords().put(word.getText(), word);
             return new ResponseEntity(HttpStatus.OK);
-        } else return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }
 
