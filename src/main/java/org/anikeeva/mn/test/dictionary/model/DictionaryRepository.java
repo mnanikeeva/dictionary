@@ -8,24 +8,24 @@ import java.util.List;
  */
 public class DictionaryRepository {
 
-    List<Dictionary> dict = new ArrayList<>();
+    List<Dictionary> list = new ArrayList<>();
 
     public Dictionary find(String name) {
-        for (Dictionary aDict : dict) {
-            if (aDict.getName().equals(name)) {
-                return aDict;
+        for (Dictionary dict : list) {
+            if (dict.getName().equals(name)) {
+                return dict;
             }
         }
         return null;
     }
 
     public void deleteByName(String name) {
-        dict.remove(find(name));
+        list.remove(find(name));
     }
 
     public Dictionary create(String name) {
         Dictionary dictionary = new Dictionary(name);
-        dict.add(dictionary);
+        list.add(dictionary);
         return dictionary;
     }
 
